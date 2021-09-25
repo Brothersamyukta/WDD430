@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="panel panel-default">
+    <div class="col-xs-12 panel-heading">
+     
+      <div class="col-xs-12">
+        <h1>{{contact.name}}</h1>
+        <div class="panel-info d-flex align-items-between">
+          <div class="user-image">
+            <img src="{{contact.imageUrl}}" alt="{{contact.name}}" class="img-rounded img-responsive">
+          </div>
+          <div class="buttons">
+            <div class="btn-toolbar" role="group">
+              <button type="button" class="btn btn-primary">Edit</button>
+              <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- Panel Body -->
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-12 margin-top">
+            <p>Email:{{contact.email}}</p>
+            <p>Phone:{{contact.phone}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
