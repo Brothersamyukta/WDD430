@@ -9,9 +9,9 @@
       <div class="row">
         <div class="col-xs-12 margin-top">
           <cms-document-item
-          *ngFor="let document of documents"
-          [document]="document"
-          (click)="onSelected(document)">
+          *ngFor="let doc of documents"
+          [document]="doc"
+         >
         </cms-document-item>
         </div>
        </div>

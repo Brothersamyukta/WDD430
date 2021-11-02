@@ -12,12 +12,23 @@
             <div class="row">
                 <div class="col-xs-12 margin-top">
                     <cms-contact-item
+                    *ngFor="let singleContact of contacts"
+                    [item]="singleContact"
+                    ></cms-contact-item>
+                </div>
+
+            </div>
+           
+            
+            <!-- <div class="row">
+                <div class="col-xs-12 margin-top">
+                    <cms-contact-item
                       *ngFor="let contact of contacts"
                       [contact]="contact"
                       (click)="onSelected(contact)">
                     </cms-contact-item>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

@@ -1,0 +1,11 @@
+<a href="#" class="list-group-item clearfix" (click)="onSelect()">
+    <div class="pull-left">
+        <h4 class="list-group-item-heading">{{ item?.name}}</h4>
+    </div>
+    <span class="pull-right">
+        <img 
+        [src]="item?.imageUrl" 
+        alt="{{ item?.name}}" 
+        class="img-rounded img-size">
+    </span>
+</a>    
