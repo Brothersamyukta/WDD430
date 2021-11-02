@@ -10,23 +10,19 @@ import {MessageService} from '../message.service';
 export class MessageEditComponent implements OnInit {
   @ViewChild('subjectInput') subjectInput: ElementRef;
   @ViewChild('messageInput') messageInput: ElementRef;
+  currentSender = '1';
 
-  currentSender = 'Samyukta';
 
-
-  constructor(private msgService: MessageService) { }
+  constructor(private messageService: MessageService) { }
 
   ngOnInit(){
   }
 
   onSendMessage() {
     const subject = this.subjectInput.nativeElement.value;
-    console.log(subject)
     const msgText = this.messageInput.nativeElement.value;
-    console.log(msgText)
     const newMessage = new Message('5', subject, msgText, this.currentSender);
-
-    this.msgService.addMessage(newMessage);
+    this.messageService.addMessage(newMessage);
 
 
     this.onClear();
