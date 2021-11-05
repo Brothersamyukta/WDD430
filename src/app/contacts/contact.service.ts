@@ -6,7 +6,7 @@ import { Injectable, EventEmitter } from '@angular/core';
   providedIn: 'root',
 })
 export class ContactService {
-  public conctactSelectedEvent = new EventEmitter<Contact>();
+  public conctactSelectedEvent = new EventEmitter<Contact[]>();
 
   private contacts: Contact[] = [];
   constructor() {
@@ -29,5 +29,17 @@ export class ContactService {
 
   getContact(id: String): Contact {
     return this.contacts.find((contact) => contact.id === id);
+  }
+
+  deleteContact(contact: Contact) {
+    if (!contact) {
+      return;
+    }
+    const pos = this.contacts.indexOf(contact);
+    if (pos < 0) {
+      return;
+    }
+    this.contacts.splice(pos, 1);
+    this.conctactSelectedEvent.emit(this.contacts.slice());
   }
 }
