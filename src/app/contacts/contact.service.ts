@@ -1,12 +1,14 @@
 import { Contact } from './contact.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactService {
-  public conctactSelectedEvent = new EventEmitter<Contact[]>();
+  public conctactSelectedEvent = new Subject<Contact[]>();
+  public maxContactId: number;
 
   private contacts: Contact[] = [];
   constructor() {
@@ -40,6 +42,47 @@ export class ContactService {
       return;
     }
     this.contacts.splice(pos, 1);
-    this.conctactSelectedEvent.emit(this.contacts.slice());
+    this.conctactSelectedEvent.next(this.contacts.slice());
   }
+  getMaxId(): number {
+    let maxId = 0
+
+    for (const contact of this.contacts){
+      let currentId = parseInt(contact.id);
+
+        if (currentId > maxId){
+            maxId = currentId;
+        }         
+    }
+
+  return maxId;
+ }
+ addContact(newContact: Contact) {
+  if (newContact === null) {
+    return
+  }
+
+  this.maxContactId++
+  let docId = Number(newContact.id)
+  docId= this.maxContactId;
+  this.contacts.push(newContact);
+  
+  const documentsListClone = this.contacts.slice()
+  this.conctactSelectedEvent.next(documentsListClone)
+}
+updateDocument(originalContact: Contact, newContact: Contact) {
+  if (!originalContact||newContact) {
+    return
+  }
+  
+  const pos = this.contacts.indexOf(originalContact)
+  if (pos < 0) {
+    return
+  }
+    
+  newContact.id = originalContact.id
+  this.contacts[pos] = newContact
+  const contactListClone = this.contacts.slice()
+  this.conctactSelectedEvent.next(contactListClone)
+}
 }
