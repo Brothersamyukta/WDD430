@@ -26,12 +26,10 @@ export class DocumentService {
   }
 
   deleteDocument(doc: Document) {
-    console.log(doc)
     if (!doc) {
       return null;
     }
     const pos = this.document.indexOf(doc);
-    console.log(pos)
     if (pos < 0) {
       return null;
     }
@@ -55,20 +53,20 @@ export class DocumentService {
   return maxId;
  }
  addDocument(newDocument: Document) {
-  if (newDocument === null) {
+  if (!newDocument) {
     return
   }
 
   this.maxDocumentId++
-  let docId = Number(newDocument.id)
-  docId= this.maxDocumentId;
+  newDocument.id = this.maxDocumentId.toString();
   this.document.push(newDocument);
   
   const documentsListClone = this.document.slice()
   this.docSelectedEvent.next(documentsListClone)
 }
 updateDocument(originalDocument: Document, newDocument: Document) {
-  if (!originalDocument||newDocument) {
+
+  if (!(originalDocument||newDocument)) {
     return
   }
   
@@ -76,7 +74,7 @@ updateDocument(originalDocument: Document, newDocument: Document) {
   if (pos < 0) {
     return
   }
-    
+
   newDocument.id = originalDocument.id
   this.document[pos] = newDocument
   const documentsListClone = this.document.slice()
