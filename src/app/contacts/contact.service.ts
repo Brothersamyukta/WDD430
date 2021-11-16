@@ -2,6 +2,7 @@ import { Contact } from './contact.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class ContactService {
   public maxContactId: number;
 
   private contacts: Contact[] = [];
-  constructor() {
+  constructor(private http:HttpClient) {
     this.contacts = MOCKCONTACTS;
   }
 
@@ -42,7 +43,8 @@ export class ContactService {
       return;
     }
     this.contacts.splice(pos, 1);
-    this.conctactSelectedEvent.next(this.contacts.slice());
+    // this.conctactSelectedEvent.next(this.contacts.slice());
+    this.storeContactToFB()
   }
   getMaxId(): number {
     let maxId = 0
@@ -65,8 +67,9 @@ export class ContactService {
   this.maxContactId++
   newContact.id = this.maxContactId.toString();
   this.contacts.push(newContact);
-  const documentsListClone = this.contacts.slice()
-  this.conctactSelectedEvent.next(documentsListClone)
+  // const documentsListClone = this.contacts.slice()
+  // this.conctactSelectedEvent.next(documentsListClone)
+  this.storeContactToFB()
 }
 updateDocument(originalContact: Contact, newContact: Contact) {
   if (!(originalContact||newContact)) {
@@ -80,7 +83,42 @@ updateDocument(originalContact: Contact, newContact: Contact) {
     
   newContact.id = originalContact.id
   this.contacts[pos] = newContact
-  const contactListClone = this.contacts.slice()
-  this.conctactSelectedEvent.next(contactListClone)
+  // const contactListClone = this.contacts.slice()
+  // this.conctactSelectedEvent.next(contactListClone)
+  this.storeContactToFB()
+}
+
+
+getContactFromFB()
+{
+  this.http.get<Contact[]>('https://cms-wdd430-53dd4-default-rtdb.firebaseio.com/contacts.json')
+  .subscribe((contact:Contact[])=> {
+    this.contacts = contact;
+    this.maxContactId = this.getMaxId();
+    this.contacts.sort((a, b) =>
+      a.name < b.name ? 1 : a.name > b.name ? -1 : 0
+    );
+    this.conctactSelectedEvent.next(this.contacts.slice());
+  })
+}
+
+
+storeContactToFB() {
+  let contacts = JSON.stringify(this.contacts);
+
+  // Create a Header for Content Type
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+  this.http
+    .put(
+      'https://cms-wdd430-53dd4-default-rtdb.firebaseio.com/contacts.json',
+      contacts,
+      { headers }
+    )
+    .subscribe(() => {
+      this.conctactSelectedEvent.next(this.contacts.slice());
+    });
 }
 }

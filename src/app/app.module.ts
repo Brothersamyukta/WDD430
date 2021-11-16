@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
@@ -21,6 +22,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { DocumentEditComponent } from './documents/document-edit/document-edit.component';
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
 import {DndModule} from 'ng2-dnd';
+import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -40,10 +42,11 @@ import {DndModule} from 'ng2-dnd';
     DocumentItemComponent,
     MesssageItemComponent,
     DocumentEditComponent,
-    ContactEditComponent
+    ContactEditComponent,
+    ContactsFilterPipe
   ],
   imports: [
-    BrowserModule, AppRoutingModule, FormsModule, DndModule.forRoot()
+    BrowserModule, AppRoutingModule, FormsModule, DndModule.forRoot(), HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Message} from './message.model'
+import {MessageService} from './message.service'
 
 @Component({
   selector: 'cms-messages',
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
-
-  constructor() { }
+  messages: Message[];
+  constructor(private messageService: MessageService) { }
 
   ngOnInit() {
+    this.messageService.messageChangedEvent.subscribe((message: Message[]) => {
+      this.messages = message;
+    });
+    this.messageService.getMessageFromFB();
   }
 
+  finalMessage(message: Message) {
+    this.messages.push(message);
+  }
 }

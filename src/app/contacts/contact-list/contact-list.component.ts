@@ -14,16 +14,18 @@ export class ContactListComponent implements OnInit, OnDestroy {
   
 
   contacts: Contact[]
+  term: string;
   private contactChangedSubscription: Subscription
   constructor(private contactSerivce: ContactService, private route:ActivatedRoute, private router: Router) { }
 
   
   ngOnInit() {
-    this.contacts = this.contactSerivce.getContacts();
+  
     
     this.contactChangedSubscription=this.contactSerivce.conctactSelectedEvent.subscribe((contact: Contact[]) => {
       this.contacts = contact;
     });
+    this.contactSerivce.getContactFromFB();
   }
 
   ngOnDestroy(){
@@ -35,6 +37,10 @@ export class ContactListComponent implements OnInit, OnDestroy {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 
+  search(value: string) {
+    this.term = value;
+    console.log(this.term)
+  }
   
 
 }
