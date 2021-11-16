@@ -1,9 +1,13 @@
-.required.ng-invalid {
+/* .required.ng-invalid {
     border: 1px solid red;
   }
-  
-  .invalid.ng-invalid.ng-dirty {
+   */
+
+  .make-red{
     border: 1px solid red;
+  }
+  input.ng-invalid.ng-dirty.ng-touched {
+    border: 1px solid red !important;
   }
   
   .pad-left-right{

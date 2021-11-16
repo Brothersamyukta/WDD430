@@ -49,7 +49,7 @@ export class ContactEditComponent implements OnInit {
   onCancel() {
     this.router.navigate(['/contacts']);
   }
-  onSubmit(form: NgForm) {
+  onSubmitContact(form: NgForm) {
     const value = form.value;
     const newContact = new Contact(
       "",
