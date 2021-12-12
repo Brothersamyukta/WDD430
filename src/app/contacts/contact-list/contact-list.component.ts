@@ -21,11 +21,10 @@ export class ContactListComponent implements OnInit, OnDestroy {
   
   ngOnInit() {
   
-    
     this.contactChangedSubscription=this.contactSerivce.conctactSelectedEvent.subscribe((contact: Contact[]) => {
       this.contacts = contact;
     });
-    this.contactSerivce.getContactFromFB();
+    this.contactSerivce.getContacts();
   }
 
   ngOnDestroy(){

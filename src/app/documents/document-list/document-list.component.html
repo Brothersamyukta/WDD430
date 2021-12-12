@@ -8,6 +8,9 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-xs-12 margin-top">
+          <ul>
+            <li *ngIf="!documents">I was empty</li>
+          </ul>
           <cms-document-item
           *ngFor="let doc of documents"
           [document]="doc"

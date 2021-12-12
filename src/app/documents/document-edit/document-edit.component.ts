@@ -73,9 +73,9 @@ ngOnInit(){
       null
     );
     if (this.editMode) {
-      this.documentService.updateDocument(this.originalDocument, newDocument)
+      this.documentService.updateDocumentToBackend(this.originalDocument, newDocument)
     } else {
-      this.documentService.addDocument(newDocument);
+      this.documentService.addDocumentToBackend(newDocument);
     }
 
     this.onCancel();

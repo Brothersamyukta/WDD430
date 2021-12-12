@@ -29,7 +29,9 @@ export class ContactEditComponent implements OnInit {
       this.editMode = false;
       return;
     }
-    this.originalContact = this.contactService.getContact(this.id);
+    this.contactService.getContact(this.id).subscribe(contactData => {
+      this.originalContact = contactData.contact;
+    });
   
     if (!this.originalContact) {
       return;
@@ -60,7 +62,7 @@ export class ContactEditComponent implements OnInit {
       this.groupContacts
     );
     if (this.editMode) {
-      this.contactService.updateDocument(this.originalContact, newContact)
+      this.contactService.updateContact(this.originalContact, newContact)
     } else {
       this.contactService.addContact(newContact);
     }
